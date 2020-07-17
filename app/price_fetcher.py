@@ -14,11 +14,7 @@ class PriceFetcher:
 
     def fetch(self, instrument):
         kwargs = {}
-        dt_now = datetime.utcnow()
-        dt_from = dt_now - timedelta(days=1)
         kwargs['granularity'] = 'H1'
-        kwargs['from'] = dt_from.isoformat() + '000Z'
-        kwargs['to'] = dt_now.isoformat() + '000Z'
         response = self.api.instrument.candles(instrument, **kwargs)
         if response.status != 200:
             raise FetchPricesError(response.status, response.body)
