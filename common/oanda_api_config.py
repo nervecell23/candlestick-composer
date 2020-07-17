@@ -26,9 +26,9 @@ class Config:
 
     def load(self):
         if os.environ.get("FLASK_ENV", None) == "development":
-            path = Path(__file__).parent.parent / "secreat" / "oanda_api_practise.yml"
+            path = Path(__file__).parent.parent / "secret" / "oanda_api_practise.yml"
         elif os.environ.get("FLASK_ENV", None) == "production":
-            path = Path(__file__).parent.parent / "secreat" / "oanda_api.yml"
+            path = Path(__file__).parent.parent / "secret" / "oanda_api.yml"
         try:
             with open(path) as f:
                 y = yaml.load(f, Loader=yaml.FullLoader)
