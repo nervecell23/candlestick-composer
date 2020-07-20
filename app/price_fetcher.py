@@ -1,3 +1,4 @@
+import pandas as pd
 from datetime import datetime, timedelta
 
 class FetchPricesError(Exception):
@@ -18,7 +19,17 @@ class PriceFetcher:
         response = self.api.instrument.candles(instrument, **kwargs)
         if response.status != 200:
             raise FetchPricesError(response.status, response.body)
-        return response.get('candles')
+        candle_list = response.get('candles')
+        dt_candle = []
+        for candle in candle_list:
+            time = candle.time 
+            o = candle.mid.o
+            h = candle.mid.h
+            l = candle.mid.l
+            c = candle.mid.c
+            dt_candle.append({'Open': o, 'High': h, 'Low': l, 'Close': c})
+        return pd.DataFrame(dt_candle)
+
         
 if __name__ == '__main__':
     pass
