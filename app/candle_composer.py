@@ -1,12 +1,13 @@
+import numpy as np
 import pandas as pd
 
 class CandleComposer:
+    def compose(self, df, interval):
+        df.resample(interval).agg({'Open': 'first', 'High': np.max, 'Low': np.min, 'Close': 'last'})[df.columns]
+        df.dropna(how='any', inplace=True)
+        return df
 
-    def __init__(self, interval, candle_list):
-        self.interval = interval
-        self.candle_list = candle
 
-    def compose(self):
 
 
 
