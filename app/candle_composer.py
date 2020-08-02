@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 class CandleComposer:
-    def compose(self, df, interval):
+    def compose_return_series(self, df, interval):
         df = df[df.index.dayofweek < 5]
         df = df.resample(interval).agg({'Open': 'first', 'High': np.max, 'Low': np.min, 'Close': 'last'})[df.columns]
         df.dropna(how='any', inplace=True)
