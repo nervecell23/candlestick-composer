@@ -1,5 +1,6 @@
 import pandas as pd
 from datetime import datetime, timedelta
+from app.models import CandleSticks
 
 class FetchPricesError(Exception):
     def __init__(self, status, body):
@@ -13,7 +14,7 @@ class PriceFetcher:
     def __init__(self, api):
        self.api = api
 
-    def fetch(self, instrument):
+    def fetch_from_api(self, instrument):
         kwargs = {}
         kwargs['granularity'] = 'H1'
         response = self.api.instrument.candles(instrument, **kwargs)
@@ -31,6 +32,21 @@ class PriceFetcher:
         df = pd.DataFrame(dt_candle)
         df.set_index('DateTime', inplace=True)
         return df
+
+    def fetch_from_db(self, instrument):
+        temp_list = []
+        candlesticks = CandleSticks.query.limit(24*30).all()
+        for candlestick in candlesticks:
+            time = candlestick.datetime
+            open = candlestick.o
+            high = candlestick.h
+            low = candlestick.l
+            close = candlestick.c
+            temp_list.append({'Datetime': time, 'Open': open, 'High': high, 'Low': low, 'Close': close})
+        df = pd.DataFrame(temp_list)
+        df.set_index('DateTime', inplace=True)
+        return df
+
 
         
 if __name__ == '__main__':
