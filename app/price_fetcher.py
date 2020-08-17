@@ -35,6 +35,7 @@ class PriceFetcher:
 
     def fetch_from_db(self, instrument):
         temp_list = []
+        candlesticks = CandleSticks.query.filter_by(ticker=instrument).candlesticks.limit(24*30).all()
         candlesticks = CandleSticks.query.limit(24*30).all()
         for candlestick in candlesticks:
             time = candlestick.datetime
