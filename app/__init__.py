@@ -7,7 +7,7 @@ corr_app = Flask(__name__)
 curr_env = os.environ.get('FLASK_ENV', None)
 
 if curr_env == 'development':
-    corr_app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URI_DEV']
+    corr_app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI_DEV', None)
 elif curr_env == 'production':
     corr_app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URI'] 
 corr_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
