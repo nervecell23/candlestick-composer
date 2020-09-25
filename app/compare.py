@@ -5,19 +5,16 @@ from app.price_fetcher import PriceFetcher
 
 
 class Compare:
-    def __init__(self, api, ticker_a, ticker_b, granularity='D'):
+    def __init__(self, api):
         self.price_fetcher = PriceFetcher(api)
         self.candle_composer = CandleComposer()
-        self.granularity = granularity
-        self.ticker_a = ticker_a
-        self.ticker_b = ticker_b
 
-    def compare(self):
+    def compare(self, instrument_a, instrument_b):
         '''
-        Calculate Pearson correlation of two pandas series
+        Calculate Pearson correlation of two return Series
         '''
-        candle_list_a = self.price_fetcher.fetch_from_api(self.ticker_a)
-        candle_list_b = self.price_fetcher.fetch_from_api(self.ticker_b)
+        candle_list_a = self.price_fetcher.fetch_from_api(instrument_a)
+        candle_list_b = self.price_fetcher.fetch_from_api(instrument_b)
         df_a = self.price_fetcher.convert_to_dataframe(candle_list_a)
         df_b = self.price_fetcher.convert_to_dataframe(candle_list_b)
         return_series_a = self.candle_composer.compose_return_series(df_a)
