@@ -23,17 +23,3 @@ class Compare:
         return_series_a = self.candle_composer.compose_return_series(df_a)
         return_series_b = self.candle_composer.compose_return_series(df_b)
         return return_series_a.corr(return_series_b)
-
-    def compare_from_file(self, loc_a, loc_b):
-        '''
-        Load pandas dataframe of candlesticks from pickle file
-        '''
-        with open(loc_a, 'rb') as f:
-            df = pickle.load(f)
-            return_series_a = self.candle_composer.compose_return_series(
-                df, '8H')
-        with open(loc_b, 'rb') as f:
-            df = pickle.load(f)
-            return_series_b = self.candle_composer.compose_return_series(
-                df, '8H')
-        return return_series_a.corr(return_series_b)
