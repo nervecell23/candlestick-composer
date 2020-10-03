@@ -1,6 +1,5 @@
 import pandas as pd
 from datetime import datetime, timedelta
-from app.models import Instrument
 
 
 class FetchPricesError(Exception):
@@ -42,7 +41,7 @@ class PriceFetcher:
             c = candle.mid.c
             dt_candle.append({'DateTime': time, 'Open': o,
                               'High': h, 'Low': l, 'Close': c})
-        return candle_list
+        return dt_candle
 
     def convert_to_dataframe(self, price_list):
         """
