@@ -1,13 +1,7 @@
-import pickle
-import pandas as pd
-from app.candle_composer import CandleComposer
-from app.price_fetcher import PriceFetcher
-
-
 class Compare:
-    def __init__(self, api):
-        self.price_fetcher = PriceFetcher(api)
-        self.candle_composer = CandleComposer()
+    def __init__(self, price_fetcher, candle_composer):
+        self.price_fetcher = price_fetcher
+        self.candle_composer = candle_composer
 
     def compare(self, instrument_a, instrument_b):
         '''
