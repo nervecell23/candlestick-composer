@@ -1,14 +1,24 @@
-from app import corr_app , db
-from app.models import CandleStick, Instrument
+from app.multi_compare import MultipleCompare
+from common.oanda_api_config import Config
+from flask import Flask
+
+corr_app = Flask(__name__)
+
+config = Config()
+config.load()
+api = config.create_context()
+multi_comparer = MultipleCompare(api)
+
 
 @corr_app.route('/')
 def index():
     return 'Hello'
 
-@corr_app.route('/add_entry')
-def add_entry():
-    for i, c in db.session.query(Instrument, CandleStick).join(CandleStick, Instrument.id == CandleStick.ticker_id).all():
-        print(f"---{i} ---{c}")
-    return 'Done'
+
+@corr_app.route('/corr')
+def calculate_corr():
+    return multi_comparer.calculate_corr()
+
+
 if __name__ == '__main__':
     corr_app.run()
