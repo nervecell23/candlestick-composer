@@ -16,4 +16,4 @@ class TestMultipleCompare:
 
         subject = MultipleCompare(oanda_api)
         result = subject.calculate_corr()
-        assert np.array(result).shape == (2, 2)
+        assert np.array(result).shape == (3, 3)
